@@ -32,7 +32,7 @@ where
     fn encode(cmd: &Self::Cmd, b: &mut [u32]) -> usize {
         b[0] = 0;
         b[1] = <Self as ProtocolEncoder<F>>::DATA[0];
-        if cmd.repeat {
+        if cmd.is_repeat() {
             b[2] = <Self as ProtocolEncoder<F>>::DATA[2];
             b[3] = <Self as ProtocolEncoder<F>>::DATA[4];
 
