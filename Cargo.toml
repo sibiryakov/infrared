@@ -28,7 +28,7 @@ remotes = []
 embedded-hal = {version = "0.2.4", features = ["unproven"], optional = true}
 defmt = { version = "0.3", optional = true }
 log = { version = "0.4", optional = true }
-fugit = { version = "0.3.5", optional = true }
+fugit = { version = "0.3.7", features = ["defmt"], optional = true }
 
 [dev-dependencies]
 dummy-pin = "0.1.1"
