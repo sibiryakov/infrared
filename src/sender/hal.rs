@@ -46,8 +46,8 @@ where
             match status {
                 PulseDataStatus::Transmit(true) => self.pin.enable(),
                 PulseDataStatus::Transmit(false) => self.pin.disable(),
-                PulseDataStatus::Idle => self.pin.disable(),
-                PulseDataStatus::Error => self.pin.disable(),
+                PulseDataStatus::Idle => { self.status = SenderStatus::Idle; self.pin.disable(); },
+                PulseDataStatus::Error => { self.status = SenderStatus::Idle; self.pin.disable(); },
             };
         }
     }
