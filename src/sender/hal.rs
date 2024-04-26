@@ -3,6 +3,9 @@
 use crate::sender::{ProtocolEncoder, PulsedataSender, PulseDataStatus};
 
 /// Embedded hal sender
+/// The BUFSIZE is specified in terms of pulse sender commands, each command is a single unit,
+/// the required number of commands is protocol dependent
+/// the NEC16 can be up to 68 pulse sender commands per protocol command
 pub struct Sender<PwmPin, const FREQ: u32, const BUFSIZE: usize> {
     pin: PwmPin,
     counter: u32,
@@ -50,6 +53,11 @@ where
                 PulseDataStatus::Error => { self.status = SenderStatus::Idle; self.pin.disable(); },
             };
         }
+    }
+
+    pub fn log_sender_status(&self) {
+        defmt::info!("{} {}", self.status, self.counter);
+        self.pulsedata_sender.log_state();
     }
 }
 

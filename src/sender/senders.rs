@@ -47,6 +47,8 @@ impl<const S: usize> PulsedataSender<S> {
             }
         } else {
             self.status = PulseDataStatus::Idle;
+            defmt::debug!("EOB at {}", self.pos);
+            self.log_state();
         }
 
         self.status
@@ -54,6 +56,10 @@ impl<const S: usize> PulsedataSender<S> {
 
     pub fn buffer(&self) -> &[u32] {
         self.ptb.buffer()
+    }
+
+    pub fn log_state(&self) {
+        defmt::info!("{} pos: {} ts_lastedge {}", self.status, self.pos, self.ts_lastedge);
     }
 }
 

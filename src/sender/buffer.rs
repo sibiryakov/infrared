@@ -19,6 +19,7 @@ impl<const S: usize> PulsedataBuffer<S> {
 
     pub fn load<SendProto: ProtocolEncoder<F>, const F: u32>(&mut self, c: &SendProto::Cmd) {
         let len = SendProto::encode(c, &mut self.buf[self.offset..]);
+        defmt::debug!("loading to off: {} len: {}", self.offset, len);
         self.offset += len;
     }
 
