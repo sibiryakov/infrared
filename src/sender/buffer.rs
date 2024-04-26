@@ -23,6 +23,9 @@ impl<const S: usize> PulsedataBuffer<S> {
     }
 
     pub fn get(&self, index: usize) -> Option<u32> {
+        if index >= self.offset {
+             return None;
+        }
         self.buf.get(index).cloned()
     }
 
