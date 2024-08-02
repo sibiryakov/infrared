@@ -21,12 +21,12 @@ where
 {
     type EncoderData = [u32; 6];
     const DATA: [u32; 6] = [
-        calc_ticks(Cmd::PULSE_DISTANCE.header_high, F),
-        calc_ticks(Cmd::PULSE_DISTANCE.header_low, F),
-        calc_ticks(Cmd::PULSE_DISTANCE.repeat_low, F),
-        calc_ticks(Cmd::PULSE_DISTANCE.data_high, F),
-        calc_ticks(Cmd::PULSE_DISTANCE.data_zero_low, F),
-        calc_ticks(Cmd::PULSE_DISTANCE.data_one_low, F),
+        calc_ticks(Cmd::PULSE_DISTANCE.header_high, F),     // DATA[0]
+        calc_ticks(Cmd::PULSE_DISTANCE.header_low, F),      // DATA[1]
+        calc_ticks(Cmd::PULSE_DISTANCE.repeat_low, F),      // DATA[2]
+        calc_ticks(Cmd::PULSE_DISTANCE.data_high, F),       // DATA[3]
+        calc_ticks(Cmd::PULSE_DISTANCE.data_zero_low, F),   // DATA[4]
+        calc_ticks(Cmd::PULSE_DISTANCE.data_one_low, F),    // DATA[5]
     ];
 
     fn encode(cmd: &Self::Cmd, b: &mut [u32]) -> usize {
@@ -53,6 +53,10 @@ where
                 }
                 bi += 2;
             }
+
+            // end of the message
+            b[bi] = <Self as ProtocolEncoder<F>>::DATA[3];
+            bi += 1;
 
             bi
         }
