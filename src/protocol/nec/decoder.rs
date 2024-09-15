@@ -87,14 +87,13 @@ where
     Cmd: NecCommandVariant,
 {
     #[rustfmt::skip]
-    fn event(&mut self, rising: bool, dur: Mono::Duration) -> State {
+    fn event(&mut self, rising: bool, dur: Mono::Duration) -> State  {
 
         use NecState::*;
         use PulseWidth::*;
 
         if rising {
-
-            let total_duration = dur + self.dt_save;
+            let total_duration: Mono::Duration  = dur + self.dt_save;
 
             let pulsewidth = self.pulsespans.get(total_duration)
                 .unwrap_or(PulseWidth::Invalid);
@@ -116,10 +115,11 @@ where
             };
 
             trace!(
-                "State(prev, new): ({:?}, {:?}) pulsewidth: {:?}",
+                "State(prev, new): ({:?}, {:?}) pulsewidth: {:?} tdur {:?}",
                 self.state,
                 status,
-                pulsewidth
+                pulsewidth,
+                total_duration
             );
 
             self.state = status;
