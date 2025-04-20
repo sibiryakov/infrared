@@ -10,9 +10,9 @@ keywords = ["infrared", "remote", "rc5", "rc6", "nec"]
 categories = ["no-std", "embedded"]
 license = "MIT OR Apache-2.0"
 
-[workspace]
-members = ["examples/vcd-parser"]
-exclude = ["examples/bluepill", "examples/rp-pico", "examples/arduino_uno"]
+#[workspace]
+#members = ["examples/vcd-parser"]
+#exclude = ["examples/bluepill", "examples/rp-pico", "examples/arduino_uno"]
 
 [features]
 default = ["nec", "rc5", "rc6", "sbp", "denon", "remotes", "embedded"]
@@ -28,7 +28,7 @@ remotes = []
 embedded-hal = {version = "0.2.4", features = ["unproven"], optional = true}
 defmt = { version = "0.3", optional = true }
 log = { version = "0.4", optional = true }
-fugit = { version = "0.3.5", optional = true }
+fugit = { version = "0.3.7", features = ["defmt"], optional = true }
 
 [dev-dependencies]
 dummy-pin = "0.1.1"

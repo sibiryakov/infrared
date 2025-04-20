@@ -118,6 +118,23 @@ fn all_nec_commands() {
 }
 
 #[test]
+fn nec_repeat_code() {
+    const FREQUENCY: u32 = 40_000;
+    let mut ptb = PulsedataBuffer::<96>::new();
+    ptb.reset();
+    let cmd = NecCommand {
+        addr: 128,
+        cmd: 64,
+        repeat: true,
+    };
+    ptb.load::<Nec, FREQUENCY>(&cmd);
+    let mut brecv = BufferInputReceiver::<Nec>::with_frequenzy(40_000);
+
+    let cmdres = brecv.iter(ptb.buffer()).next().unwrap();
+    assert!(cmdres.repeat);
+}
+
+#[test]
 fn clock_frequencies() {
     one_freq::<20_000>();
     one_freq::<40_000>();
@@ -198,6 +215,16 @@ fn repeat() {
     assert_eq!(cmds[0].repeat, false);
     assert_eq!(cmds[1].repeat, true);
     assert_eq!(cmds[7].repeat, true);
+}
+
+#[test]
+fn cmd_repeat() {
+    let cmd = NecCommand {
+        addr: 7,
+        cmd: 44,
+        repeat: true,
+    };
+    assert!(cmd.is_repeat());
 }
 
 #[test]

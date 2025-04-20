@@ -1,4 +1,5 @@
 use core::ops::{Add, Sub};
+use defmt::{Format};
 
 #[cfg(feature = "fugit")]
 mod fgt;
@@ -13,7 +14,8 @@ pub trait InfraMonotonic: Sized {
     type Duration: PartialOrd
         + Copy
         + Add<Self::Duration, Output = Self::Duration>
-        + core::fmt::Debug;
+        + core::fmt::Debug
+        + Format;
 
     const ZERO_INSTANT: Self::Instant;
     const ZERO_DURATION: Self::Duration;

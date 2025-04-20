@@ -55,6 +55,9 @@ pub trait NecCommandVariant: Sized {
 
     /// Pack command into a u32
     fn pack(&self) -> u32;
+
+    /// whatever the command is a repeat code
+    fn is_repeat(&self) -> bool;
 }
 
 const NEC_STANDARD_TIMING: &NecPulseLen = &NecPulseLen {
